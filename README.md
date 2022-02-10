@@ -1,5 +1,4 @@
 # WMIEnum
-WMI SA stuffs
 
 Apparently MS is finally taking wmic off certain versions of windows so what better time than now to dust off some old code than now. Does some basic enumeration stuff like getting host info, user/group stuff, etc. might add some more stuff eventually
 
