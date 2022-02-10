@@ -28,7 +28,7 @@ namespace WMIEnum.Utils.UI
             try
             {
 
-                //if (input is "") { throw new AtlasException(""); }
+                if (input is "") { throw new WMIEnumException(""); }
 
                 String[] opts = null;
                 string _out = null;
@@ -38,7 +38,7 @@ namespace WMIEnum.Utils.UI
 
                 Command cmd = _commands.FirstOrDefault(u => u.CommandName.Equals(input.Split(' ')[0], StringComparison.InvariantCultureIgnoreCase));
                 Util util = _utils.FirstOrDefault(u => u.UtilName.Equals(input.Split(' ')[0], StringComparison.InvariantCultureIgnoreCase));
-                if (cmd is null && util is null) { throw new CIMEnumException($"[-] Command {input} is invalid"); }
+                if (cmd is null && util is null) { throw new WMIEnumException($"[-] Command {input} is invalid"); }
 
                 if (input.Contains(' ')) { opts = input.Split(' '); }
 
@@ -48,7 +48,7 @@ namespace WMIEnum.Utils.UI
                 WriteLine(_out);
             }
             catch (NotImplementedException) { WriteLine($"[-] Util {input} not yet implemented"); }
-            catch (CIMEnumException e) { WriteLine(e.Message); }
+            catch (WMIEnumException e) { WriteLine(e.Message); }
             catch (Exception e) { WriteLine($"{e}"); }
         }
     }
