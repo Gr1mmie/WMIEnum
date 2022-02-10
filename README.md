@@ -11,4 +11,5 @@ Apparently MS is finally taking wmic off certain versions of windows so what bet
 git clone -> open sln file -> hit compile
 
 ## To-Do
- I'll add something here eventually
+* Remote Execution
+* Network enum stuffs
