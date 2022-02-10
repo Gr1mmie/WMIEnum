@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Text;
 using System.Management;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SharpCIMEnum.Commands.Cmds
+namespace WMIEnum.Commands.Cmds
 {
     class ReturnComputerName : Models.Command
     {

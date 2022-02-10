@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharpCIMEnum.Commands
+namespace WMIEnum.Commands
 {
     class Exit : Models.Util
     {
         public override string UtilName => "Exit";
 
-        public override string Description => "Exits SharpCIMEnum";
+        public override string Description => "Exits WMIEnum";
 
         public override string UtilExec(string[] args)
         {

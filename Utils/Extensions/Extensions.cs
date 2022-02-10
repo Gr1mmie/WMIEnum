@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace SharpCIMEnum.Utils.Extensions
+namespace WMIEnum.Utils.Extensions
 {
     class Extensions
     {

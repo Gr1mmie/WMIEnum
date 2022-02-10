@@ -1,4 +1,4 @@
-﻿namespace SharpCIMEnum.Models
+﻿namespace WMIEnum.Models
 {
     public abstract class Util
     {

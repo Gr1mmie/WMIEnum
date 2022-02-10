@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Management;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace SharpCIMEnum.Commands
+using WMIEnum.Models;
+
+namespace WMIEnum.Commands
 {
     class ReturnTargetInstalledProgram : Models.Command
     {
@@ -19,6 +17,8 @@ namespace SharpCIMEnum.Commands
             try {
                 StringBuilder outData = new StringBuilder();
 
+                if (args.Length != 1) { throw new WMIEnumException("[*] TargetInstalledPrograms [ProgramName]"); }
+
                 cProgram = args[0];
 
                 string[] fields = new string[] { "Name", "Version" };
@@ -27,7 +27,7 @@ namespace SharpCIMEnum.Commands
                     $"SELECT * FROM Win32_Product Where Name Like '%{cProgram}%'");
 
                 return outData.ToString();
-            } catch (Exception ex) { return ""; }
+            } catch (WMIEnumException e) { return e.Message; }
         }
     }
 }

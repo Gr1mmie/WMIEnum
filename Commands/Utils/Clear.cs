@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SharpCIMEnum.Commands
+namespace WMIEnum.Commands
 {
     class Clear : Models.Util
     {

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Management;
+﻿using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Management;
 
-namespace SharpCIMEnum.Commands.Cmds
+namespace WMIEnum.Commands.Cmds
 {
     class ReturnPhysicalDisks : Models.Command
     {

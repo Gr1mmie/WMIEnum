@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Management;
 using System.Text;
 
-namespace SharpCIMEnum.Commands
+namespace WMIEnum.Commands
 {
     class ReturnUsers : Models.Command
     {

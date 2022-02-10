@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Management;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace SharpCIMEnum.Commands
+using WMIEnum.Models;
+
+namespace WMIEnum.Commands
 {
     class ReturnTargetProcess : Models.Command
     {
@@ -19,7 +17,9 @@ namespace SharpCIMEnum.Commands
             try {
                 StringBuilder outData = new StringBuilder();
 
-                ProcName = "Runtime";
+                if (args.Length != 1) { throw new WMIEnumException("[*] TargetInstalledPrograms [ProgramName]"); }
+
+                ProcName = args[0];
 
                 string[] fields = new string[] { "Name", "ProcessId", "SessionId" };
 
@@ -27,7 +27,7 @@ namespace SharpCIMEnum.Commands
                     $"SELECT * FROM Win32_Process Where Name Like '%{ProcName}%'");
 
                 return outData.ToString();
-            } catch (Exception e) { return ""; }
+            } catch (WMIEnumException e) { return e.Message; }
         }
     }
 }

@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using System.Reflection;
 
-using SharpCIMEnum.Models;
-
-using SharpCIMEnum.Utils;
+using WMIEnum.Models;
+using WMIEnum.Utils;
 
 using static System.Console;
 
-using static SharpCIMEnum.Models.Data;
+using static WMIEnum.Models.Data;
 
-namespace SharpCIMEnum.Utils.UI
+namespace WMIEnum.Utils.UI
 {
     class UI
     {

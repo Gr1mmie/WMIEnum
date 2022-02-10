@@ -1,7 +1,7 @@
-﻿using System.Management;
-using System.Text;
+﻿using System.Text;
+using System.Management;
 
-namespace SharpCIMEnum.Commands.Cmds
+namespace WMIEnum.Commands.Cmds
 {
     class ReturnLoggedinUsers : Models.Command
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SharpCIMEnum.Models
+namespace WMIEnum.Models
 {
     public class Data {
         public static readonly List<Command> _commands = new List<Command>();

@@ -1,13 +1,13 @@
-﻿using SharpCIMEnum.Utils.UI;
+﻿using WMIEnum.Utils.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using static SharpCIMEnum.Models.Data;
+using static WMIEnum.Models.Data;
 
-namespace SharpCIMEnum.Commands
+namespace WMIEnum.Commands
 {
     public class Commands : Models.Util
     {

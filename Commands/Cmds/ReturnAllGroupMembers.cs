@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Text;
 using System.Management;
-using System.Text;
+using System.Collections.Generic;
 
-namespace SharpCIMEnum.Commands
+namespace WMIEnum.Commands
 {
     class ReturnAllGroupMembers : Models.Command
     {

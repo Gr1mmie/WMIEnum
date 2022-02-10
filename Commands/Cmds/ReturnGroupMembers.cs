@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Text;
 using System.Management;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 
-namespace SharpCIMEnum.Commands
+using WMIEnum.Models;
+
+namespace WMIEnum.Commands
 {
     class ReturnGroupMembers : Models.Command
     {
@@ -16,36 +15,42 @@ namespace SharpCIMEnum.Commands
 
         public override string CommandExec(string[] args)
         {
-            StringBuilder outData = new StringBuilder();
+            try {
+                StringBuilder outData = new StringBuilder();
 
-            Group = "Administrators";
+                if (args.Length != 1) { throw new WMIEnumException("[*] GroupMembers [GroupName]"); }
 
-            string cProp;
-            string cUser = null;
-            string cGroup = null;
+                Group = args[0];
 
-            List<string> users = new List<string>();
+                string cProp;
+                string cUser = null;
+                string cGroup = null;
 
-            outData.AppendLine($"Group: {Group}");
+                List<string> users = new List<string>();
 
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * From Win32_GroupUser");
-            foreach (ManagementObject obj in searcher.Get())
-            {
-                foreach (var prop in obj.Properties) {
-                    cProp = prop.Value.ToString();
-                    if (cProp.Contains("UserAccount") || cProp.Contains("SystemAccount")) {
-                        cUser = cProp.Split('=')[2].Split('"')[1];
+                outData.AppendLine($"Group: {Group}");
+
+                ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * From Win32_GroupUser");
+                foreach (ManagementObject obj in searcher.Get())
+                {
+                    foreach (var prop in obj.Properties)
+                    {
+                        cProp = prop.Value.ToString();
+                        if (cProp.Contains("UserAccount") || cProp.Contains("SystemAccount"))
+                        {
+                            cUser = cProp.Split('=')[2].Split('"')[1];
+                        }
+
+                        if (cProp.Contains("Group")) { cGroup = cProp.Split('=')[2].Split('"')[1]; }
+
+                        if (cGroup == Group) { if (!users.Contains(cUser) && cUser != null) { users.Add(cUser); } }
                     }
-
-                    if (cProp.Contains("Group")) { cGroup = cProp.Split('=')[2].Split('"')[1]; }
-
-                    if (cGroup == Group) { if (!users.Contains(cUser) && cUser != null) { users.Add(cUser); } }
                 }
-            }
-            var userArr = users.ToArray();
-            for (int i = 0; i < userArr.Length; i++) { outData.AppendLine($"\t{userArr[i]}"); }
+                var userArr = users.ToArray();
+                for (int i = 0; i < userArr.Length; i++) { outData.AppendLine($"\t{userArr[i]}"); }
 
-            return outData.ToString();
+                return outData.ToString();
+            } catch (WMIEnumException e) { return e.Message; }
         }
     }
 }
