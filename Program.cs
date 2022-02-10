@@ -1,11 +1,4 @@
-﻿using System;
-using System.Management;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using WMIEnum.Utils.UI;
+﻿using WMIEnum.Utils.UI;
 
 using static System.Console;
 
@@ -19,7 +12,7 @@ namespace WMIEnum
 
             while (true) {
 
-                Write("> ");
+                Write(" > ");
                 var ui = ReadLine();
 
                 UI.Action(ui);
