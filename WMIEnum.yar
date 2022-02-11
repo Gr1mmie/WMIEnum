@@ -19,7 +19,7 @@ rule WMIEnumCommands_Yara {
         $PE_Magic_Byte = "MZ"
 
     condition:
-        // check for PE magic byte
+        // check for PE magic byte at position 0
         $PE_Magic_Byte at 0 and
         // check for namespace strings
         ($wmi_queryNamespace and $reflectionNamespace)and
