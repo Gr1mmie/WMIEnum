@@ -2,7 +2,7 @@ rule WMIEnumCommands_Yara {
     meta:
         last_updated = "2022-2-11"
         author = "Grimmie"
-        description = "Searches for specific strings in an unmodified version of WMIEnum. Searches for namespaces used and common commands"
+        description = "Searches for specific strings in an unmodified version of WMIEnum, specifically namespaces used and common commands"
         
     strings:
         // namespace strings
