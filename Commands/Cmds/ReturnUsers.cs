@@ -1,7 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
+using System.Management;
+
+using WMIEnum.Utils.Extensions;
+
+using static WMIEnum.Models.Data;
 
 namespace WMIEnum.Commands
 {
@@ -14,13 +16,16 @@ namespace WMIEnum.Commands
         public override string CommandExec(string[] args)
         {
             StringBuilder outData = new StringBuilder();
-            
+            ManagementObjectSearcher searcher = null;
+
             string[] fields = new string[] { "Name", "Caption", "FullName", "Description", "LocalAccount", "Status0", 
                 "Domain", "AccountType", "SID"};
 
-            outData = Utils.Extensions.Extensions.ObjProperties(outData, fields, "Select * From Win32_UserAccount");
+            if (ConnObj != null) {
+                searcher = Extensions.AuthSearcher("Select * From Win32_UserAccount");
+            } else { searcher = new ManagementObjectSearcher("Select * From Win32_UserAccount"); }
 
-            return outData.ToString();
+            return Extensions.ObjProperties(outData, fields, searcher).ToString();
         }
     }
 }

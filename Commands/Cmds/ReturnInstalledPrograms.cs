@@ -1,4 +1,9 @@
 ﻿using System.Text;
+using System.Management;
+
+using WMIEnum.Utils.Extensions;
+
+using static WMIEnum.Models.Data;
 
 namespace WMIEnum.Commands
 {
@@ -11,12 +16,14 @@ namespace WMIEnum.Commands
         public override string CommandExec(string[] args)
         {
             StringBuilder outData = new StringBuilder();
+            ManagementObjectSearcher searcher = null;
 
             string[] fields = new string[] { "Name", "Version" };
 
-            outData = Utils.Extensions.Extensions.ObjProperties(outData, fields, "SELECT * FROM Win32_Product");
+            if (ConnObj != null) { searcher = Extensions.AuthSearcher("SELECT * FROM Win32_Product");
+            } else { searcher = new ManagementObjectSearcher("SELECT * FROM Win32_Product"); }
 
-            return outData.ToString();
+            return Extensions.ObjProperties(outData, fields, searcher);
         }
     }
 }

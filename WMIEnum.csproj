@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{90D2872A-A0B7-4EC3-B66B-251C6212DF6F}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>SharpCIMEnum</RootNamespace>
-    <AssemblyName>SharpCIMEnum</AssemblyName>
+    <RootNamespace>WMIEnum</RootNamespace>
+    <AssemblyName>WMIEnum</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Utils\Authenticate.cs" />
     <Compile Include="Commands\Cmds\ReturnAllGroupMembers.cs" />
     <Compile Include="Commands\Cmds\ReturnComputerName.cs" />
     <Compile Include="Commands\Cmds\ReturnGroupMembers.cs" />

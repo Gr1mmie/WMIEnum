@@ -1,8 +1,10 @@
 ﻿using System.Text;
 using System.Management;
-using System.Collections.Generic;
 
 using WMIEnum.Models;
+using WMIEnum.Utils.Extensions;
+
+using static WMIEnum.Models.Data;
 
 namespace WMIEnum.Commands
 {
@@ -18,38 +20,16 @@ namespace WMIEnum.Commands
             try {
                 StringBuilder outData = new StringBuilder();
 
-                if (args.Length != 1) { throw new WMIEnumException("[*] GroupMembers [GroupName]"); }
+                if (args.Length != 2) { throw new WMIEnumException("[*] GroupMembers [GroupName]"); }
 
-                Group = args[0];
+                Group = args[1];
 
-                string cProp;
-                string cUser = null;
-                string cGroup = null;
+                ManagementObjectSearcher searcher = null;
 
-                List<string> users = new List<string>();
+                if(ConnObj != null) { searcher = Extensions.AuthSearcher("Select * From Win32_GroupUser");
+                } else { searcher = new ManagementObjectSearcher("Select * From Win32_GroupUser"); }
 
-                outData.AppendLine($"Group: {Group}");
-
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * From Win32_GroupUser");
-                foreach (ManagementObject obj in searcher.Get())
-                {
-                    foreach (var prop in obj.Properties)
-                    {
-                        cProp = prop.Value.ToString();
-                        if (cProp.Contains("UserAccount") || cProp.Contains("SystemAccount"))
-                        {
-                            cUser = cProp.Split('=')[2].Split('"')[1];
-                        }
-
-                        if (cProp.Contains("Group")) { cGroup = cProp.Split('=')[2].Split('"')[1]; }
-
-                        if (cGroup == Group) { if (!users.Contains(cUser) && cUser != null) { users.Add(cUser); } }
-                    }
-                }
-                var userArr = users.ToArray();
-                for (int i = 0; i < userArr.Length; i++) { outData.AppendLine($"\t{userArr[i]}"); }
-
-                return outData.ToString();
+                return GroupOps.FetchGroupMembers(outData, Group, searcher);
             } catch (WMIEnumException e) { return e.Message; }
         }
     }

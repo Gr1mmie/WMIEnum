@@ -1,6 +1,10 @@
 ﻿using System.Text;
 using System.Management;
 
+using WMIEnum.Utils.Extensions;
+
+using static WMIEnum.Models.Data;
+
 namespace WMIEnum.Commands.Cmds
 {
     class ReturnLoggedinUsers : Models.Command
@@ -12,24 +16,12 @@ namespace WMIEnum.Commands.Cmds
         public override string CommandExec(string[] args)
         {
             StringBuilder outData = new StringBuilder();
+            ManagementObjectSearcher searcher = null;
 
-            string cProp;
-            string cUser = null;
-            string cLogonId = null;
+            if (ConnObj != null) { searcher = Extensions.AuthSearcher("Select * From Win32_LoggedOnUser");
+            } else { searcher = new ManagementObjectSearcher("Select * From Win32_LoggedOnUser"); }
 
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * From Win32_LoggedOnUser");
-            foreach (ManagementObject obj in searcher.Get()) {
-                foreach (var prop in obj.Properties) {
-                    cProp = prop.Value.ToString();
-                    if(cProp.Contains("Account")) { cUser = cProp.Split('=')[2].Split('"')[1]; }
-                    if(cProp.Contains("LogonId")) { cLogonId = cProp.Split('=')[1].Split('"')[1]; }
-                }
-                outData.AppendLine($"User : {cUser}");
-                outData.AppendLine($"LogonId : {cLogonId}");
-                outData.AppendLine();
-            }
-
-            return outData.ToString();
+            return UserOps.FetchCurrentUsers(outData, searcher);
         }
     }
 }

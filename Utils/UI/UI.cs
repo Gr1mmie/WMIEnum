@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 
 using WMIEnum.Models;
-using WMIEnum.Utils;
 
 using static System.Console;
 
@@ -15,12 +14,13 @@ namespace WMIEnum.Utils.UI
     {
         public static void Banner()
         {
-            Console.WriteLine(
+            WriteLine(
                 "  _      ____  ___________                \n" +
                 " | | /| / /  |/  /  _/ __/__  __ ____ _   \n" +
                 " | |/ |/ / /|_/ // // _// _ \\/ // /  ' \\\n" +
                 " |__/|__/_/  /_/___/___/_//_/\\_,_/_/_/_/ \n" + 
-                "\n    Author: Grimmie                     \n"
+                "\n    Author: Grimmie                     \n" +
+                $"      Ver: {Ver}                         \n"
                 );
         }
 
@@ -56,29 +56,22 @@ namespace WMIEnum.Utils.UI
 
     public class Init
     {
-        public static void CommandInit()
-        {
-            foreach (Type type in Assembly.GetExecutingAssembly().GetTypes())
-            {
-                if (type.IsSubclassOf(typeof(Command)))
-                {
+        public static void CommandInit() {
+            foreach (Type type in Assembly.GetExecutingAssembly().GetTypes()) {
+                if (type.IsSubclassOf(typeof(Command))) {
                     Command function = Activator.CreateInstance(type) as Models.Command;
                     _commands.Add(function);
                 }
             }
         }
 
-        public static void UtilInit()
-        {
-            foreach (Type type in Assembly.GetExecutingAssembly().GetTypes())
-            {
-                if (type.IsSubclassOf(typeof(Util)))
-                {
+        public static void UtilInit() {
+            foreach (Type type in Assembly.GetExecutingAssembly().GetTypes()) {
+                if (type.IsSubclassOf(typeof(Util))) {
                     Util function = Activator.CreateInstance(type) as Util;
                     _utils.Add(function);
                 }
             }
-
         }
     }
 }

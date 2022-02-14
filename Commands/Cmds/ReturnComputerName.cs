@@ -1,5 +1,6 @@
 ﻿using System.Text;
-using System.Management;
+
+using static WMIEnum.Utils.Extensions.Extensions;
 
 namespace WMIEnum.Commands.Cmds
 {
@@ -13,9 +14,7 @@ namespace WMIEnum.Commands.Cmds
         {
             StringBuilder outData = new StringBuilder();
 
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * From CIM_OperatingSystem");
-            foreach(ManagementObject obj in searcher.Get()) { outData.Append($"Computer Name: {obj["CSName"]}"); }
-            outData.AppendLine();
+            outData.AppendLine(FetchComputerName());
 
             return outData.ToString();
         }

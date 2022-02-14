@@ -1,6 +1,9 @@
-﻿using System.Linq;
-using System.Text;
+﻿using System.Text;
 using System.Management;
+
+using WMIEnum.Utils.Extensions;
+
+using static WMIEnum.Models.Data;
 
 namespace WMIEnum.Commands.Cmds
 {
@@ -13,20 +16,15 @@ namespace WMIEnum.Commands.Cmds
         public override string CommandExec(string[] args)
         {
             StringBuilder outData = new StringBuilder();
+            ManagementObjectSearcher searcher = null;
 
             string[] fields = new string[] { "Description", "Compressed", "SystemName", "Size", "FreeSpace", 
                 "FileSystem", "DriveType", "MediaType", "SupportsFileBasedCompression", "Access" };
 
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * From Win32_LogicalDisk");
-            foreach( ManagementObject obj in searcher.Get() ) {
-                outData.AppendLine($"Name : {obj["Name"]}");
-                foreach (var prop in obj.Properties) {
-                    if (fields.Contains(prop.Name)) { outData.AppendLine(($"{prop.Name} : {prop.Value}").ToString()); }
-                }
-                outData.AppendLine();
-            }
+            if (ConnObj != null) { searcher = Extensions.AuthSearcher("Select * From Win32_LogicalDisk");
+            } else { searcher = new ManagementObjectSearcher("Select * From Win32_LogicalDisk"); }
 
-            return outData.ToString();
+            return DiskOps.FetchPhysicalDisks(outData, fields, searcher).ToString();
         }
     }
 }

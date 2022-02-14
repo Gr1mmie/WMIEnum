@@ -1,7 +1,10 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
+using System.Management;
 
 using WMIEnum.Models;
+using WMIEnum.Utils.Extensions;
+
+using static WMIEnum.Models.Data;
 
 namespace WMIEnum.Commands
 {
@@ -16,17 +19,18 @@ namespace WMIEnum.Commands
         {
             try {
                 StringBuilder outData = new StringBuilder();
+                ManagementObjectSearcher searcher = null;
 
-                if (args.Length != 1) { throw new WMIEnumException("[*] TargetInstalledPrograms [ProgramName]"); }
+                if (args.Length != 2) { throw new WMIEnumException("[*] TargetInstalledPrograms [ProgramName]"); }
 
-                cProgram = args[0];
+                cProgram = args[1];
 
                 string[] fields = new string[] { "Name", "Version" };
 
-                outData = Utils.Extensions.Extensions.ObjProperties(outData, fields,
-                    $"SELECT * FROM Win32_Product Where Name Like '%{cProgram}%'");
+                if (ConnObj != null) { searcher = Extensions.AuthSearcher($"SELECT * FROM Win32_Product Where Name Like '%{cProgram}%'");
+                } else { searcher = new ManagementObjectSearcher($"SELECT * FROM Win32_Product Where Name Like '%{cProgram}%'"); }
 
-                return outData.ToString();
+                return Extensions.ObjProperties(outData, fields, searcher);
             } catch (WMIEnumException e) { return e.Message; }
         }
     }

@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Text;
+using System.Management;
 
 using WMIEnum.Models;
+using WMIEnum.Utils.Extensions;
+
+using static WMIEnum.Models.Data;
 
 namespace WMIEnum.Commands
 {
@@ -16,17 +20,18 @@ namespace WMIEnum.Commands
         {
             try {
                 StringBuilder outData = new StringBuilder();
+                ManagementObjectSearcher searcher = null;
 
-                if (args.Length != 1) { throw new WMIEnumException("[*] TargetInstalledPrograms [ProgramName]"); }
+                if (args.Length != 2) { throw new WMIEnumException("[*] TargetInstalledPrograms [ProgramName]"); }
 
-                ProcName = args[0];
+                ProcName = args[1];
 
                 string[] fields = new string[] { "Name", "ProcessId", "SessionId" };
 
-                outData = Utils.Extensions.Extensions.ObjProperties(outData, fields,
-                    $"SELECT * FROM Win32_Process Where Name Like '%{ProcName}%'");
+                if (ConnObj != null) { searcher = Extensions.AuthSearcher($"SELECT * FROM Win32_Process Where Name Like '%{ProcName}%'");
+                } else { searcher = new ManagementObjectSearcher($"SELECT * FROM Win32_Process Where Name Like '%{ProcName}%'"); }
 
-                return outData.ToString();
+                return Extensions.ObjProperties(outData, fields,searcher).ToString();
             } catch (WMIEnumException e) { return e.Message; }
         }
     }

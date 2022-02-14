@@ -1,5 +1,7 @@
 ﻿using System.Text;
 
+using static WMIEnum.Models.Data;
+
 namespace WMIEnum.Commands
 {
     internal class Banner : Models.Util
@@ -18,7 +20,8 @@ namespace WMIEnum.Commands
                 " | | /| / /  |/  /  _/ __/__  __ ____ _   \n" +
                 " | |/ |/ / /|_/ // // _// _ \\/ // /  ' \\\n" +
                 " |__/|__/_/  /_/___/___/_//_/\\_,_/_/_/_/ \n" +
-                "\n     Author: Grimmie                      "
+                "\n     Author: Grimmie                    \n" +
+                $"      Ver: {Ver}                         \n"
                 );
 
             return banner.ToString();

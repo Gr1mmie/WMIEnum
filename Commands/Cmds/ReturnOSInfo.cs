@@ -1,7 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
+using System.Management;
+
+using WMIEnum.Utils.Extensions;
+
+using static WMIEnum.Models.Data;
 
 namespace WMIEnum.Commands
 {
@@ -14,13 +16,15 @@ namespace WMIEnum.Commands
         public override string CommandExec(string[] args)
         {
             StringBuilder outData = new StringBuilder();
+            ManagementObjectSearcher searcher = null;
 
             string[] fields = new string[] { "Caption", "InstallDate", "CSName", "Version", "BuildNumber", "OSArchitecture",
                 "LastBootUpTime", "NumberOfUsers"};
 
-            outData = Utils.Extensions.Extensions.ObjProperties(outData, fields, "SELECT * FROM CIM_OperatingSystem");
+            if (ConnObj != null) { searcher = Extensions.AuthSearcher("SELECT * FROM CIM_OperatingSystem");
+            } else { searcher = new ManagementObjectSearcher("SELECT * FROM CIM_OperatingSystem"); }
 
-            return outData.ToString();
+            return Extensions.ObjProperties(outData, fields, searcher).ToString();
         }
     }
 }
