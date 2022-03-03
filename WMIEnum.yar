@@ -1,6 +1,6 @@
 rule WMIEnumCommands_Yara {
     meta:
-        last_updated = "2022-2-11"
+        last_updated = "2022-3-3"
         author = "Grimmie"
         description = "Searches for specific strings in an unmodified version of WMIEnum, specifically namespaces used and common commands"
         
@@ -24,7 +24,5 @@ rule WMIEnumCommands_Yara {
         // check for namespace strings
         ($wmi_queryNamespace and $reflectionNamespace)and
         // check for command strings
-        ($returnGroups1 and $returnGroups2 and $returnGroups3) and
-        ($returnUsers1 and $returnUsers2) and
-        ($ReturnProcs)
+        all of $return*
 }
