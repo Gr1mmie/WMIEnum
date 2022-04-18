@@ -1,6 +1,6 @@
 # WMIEnum
 
-Apparently MS is finally taking wmic off certain versions of windows so what better time than now to dust off some old code than now. Does some basic enumeration stuff like getting host info (OS stuffs, Processes/Installed apps n stuff), user/group stuff, etc. might add some more stuff eventually
+Apparently MS is finally taking wmic off certain versions of windows so what better time to dust off some old code than now. Does some basic enumeration stuff like getting host info (OS stuffs, Processes/Installed apps n stuff), user/group stuff, etc. might add some more stuff eventually
 
 ## Pretty Menu
 
